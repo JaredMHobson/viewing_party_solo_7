@@ -2,9 +2,9 @@
 
 <div id="movie_list">
   <ul>
-    <% @movies.each do |movie| %>
-      <li><%= link_to "#{movie[:title]}", user_movie_path(@user, movie[:id]) %></li>
-      <li>Vote Average: <%= movie[:vote_average].round(2) %></li>
+    <% @facade.movies.each do |movie| %>
+      <li><%= link_to "#{movie.title}", user_movie_path(@user, movie.id) %></li>
+      <li>Vote Average: <%= movie.vote_average.round(2) %></li>
     <% end %>
   </ul>
 </div>

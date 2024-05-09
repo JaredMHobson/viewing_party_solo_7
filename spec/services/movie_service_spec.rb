@@ -47,6 +47,27 @@ RSpec.describe 'Movie Service' do
     end
   end
 
+  describe '#find_movie' do
+    it 'returns a hash of movie data that matches the argument id', :vcr do
+      movie = MovieService.new.find_movie(767)
+
+      expect(movie).to be_a Hash
+
+      expect(movie).to have_key(:title)
+      expect(movie[:title]).to be_a String
+      expect(movie[:title]).to eq('Harry Potter and the Half-Blood Prince')
+
+      expect(movie).to have_key(:vote_average)
+      expect(movie[:vote_average]).to be_a Float
+
+      expect(movie).to have_key(:title)
+      expect(movie[:title]).to be_a String
+
+      expect(movie).to have_key(:vote_average)
+      expect(movie[:vote_average]).to be_a Float
+    end
+  end
+
   describe '#get_url', :vcr do
     it 'returns a hash of the results from the argument API call' do
       response = MovieService.new.get_url('movie/top_rated')

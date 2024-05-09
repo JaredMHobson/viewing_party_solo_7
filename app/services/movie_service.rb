@@ -8,6 +8,10 @@ class MovieService
     get_url("search/movie?query=#{query}")[:results]
   end
 
+  def find_movie(id)
+    get_url("movie/#{id}?append_to_response=credits,reviews")
+  end
+
   def get_url(url)
     response = conn.get(url)
     JSON.parse(response.body, symbolize_names: true)

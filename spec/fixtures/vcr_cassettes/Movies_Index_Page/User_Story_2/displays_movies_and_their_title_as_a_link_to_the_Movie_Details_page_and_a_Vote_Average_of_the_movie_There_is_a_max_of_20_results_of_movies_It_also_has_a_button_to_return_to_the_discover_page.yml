@@ -1,0 +1,79 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/search/movie?api_key=<TMDB_API_KEY>&query=Shawshank
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 07 May 2024 23:18:39 GMT
+      Server:
+      - openresty
+      Cache-Control:
+      - public, max-age=25555
+      X-Memc:
+      - MISS, STORE
+      X-Memc-Key:
+      - 759d9067879b7b45cf8ef817f6a87cd2
+      X-Memc-Age:
+      - '0'
+      X-Memc-Expires:
+      - '25555'
+      Etag:
+      - W/"9cf161afdd99d4131c7a52bf2f9a4f61"
+      Vary:
+      - Accept-Encoding,accept-encoding
+      - Origin
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 1cc54b4fe0d62c2eb8b264f37ef2aa5c.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      X-Amz-Cf-Id:
+      - 1fVJlhqt1i_y3axxWO7LPjP38UJKXwXKMLeExeLdnlR6qqVZfMWrMg==
+      Age:
+      - '8462'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[{"adult":false,"backdrop_path":"/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg","genre_ids":[18,80],"id":278,"original_language":"en","original_title":"The
+        Shawshank Redemption","overview":"Imprisoned in the 1940s for the double murder
+        of his wife and her lover, upstanding banker Andy Dufresne begins a new life
+        at the Shawshank prison, where he puts his accounting skills to work for an
+        amoral warden. During his long stretch in prison, Dufresne comes to be admired
+        by the other inmates -- including an older prisoner named Red -- for his integrity
+        and unquenchable sense of hope.","popularity":162.501,"poster_path":"/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg","release_date":"1994-09-23","title":"The
+        Shawshank Redemption","video":false,"vote_average":8.704,"vote_count":26109},{"adult":false,"backdrop_path":"/u6hgtSIzW8nDKKWmun9JDhZz2fp.jpg","genre_ids":[99],"id":546312,"original_language":"en","original_title":"Shawshank:
+        The Redeeming Feature","overview":"Film critic and presenter Mark Kermode
+        explores the fascination and praise audiences, fans and critics have behind
+        the classic The Shawshank Redemption (1994) and how its importance grew higher
+        over the years despite being an overlooked film when it was released and not
+        getting any Oscars victories when it was nominated as one of the Best Pictures
+        of the Year.","popularity":4.876,"poster_path":"/b7DGM74MRfiLqEveVKwh0jnQ8zX.jpg","release_date":"2001-09-08","title":"Shawshank:
+        The Redeeming Feature","video":false,"vote_average":8.6,"vote_count":15},{"adult":false,"backdrop_path":null,"genre_ids":[],"id":897459,"original_language":"en","original_title":"Hope
+        Springs Eternal: A Look Back at The Shawshank Redemption","overview":"Documentary
+        about the movie.","popularity":1.861,"poster_path":"/v4wcS8XwUn5zl57rYRMzMnKahmt.jpg","release_date":"2004-06-25","title":"Hope
+        Springs Eternal: A Look Back at The Shawshank Redemption","video":false,"vote_average":7.4,"vote_count":5}],"total_pages":1,"total_results":3}'
+  recorded_at: Wed, 08 May 2024 01:39:41 GMT
+recorded_with: VCR 6.2.0

@@ -35,6 +35,7 @@ RSpec.describe 'Movie' do
     expect(@movie.id).to eq(1)
     expect(@movie.title).to eq('Inception')
     expect(@movie.vote_average).to eq(99.9999)
+    expect(@movie.runtime).to eq(121)
     expect(@movie.summary).to eq('A horror romance movie')
     expect(@movie.cast).to eq(@long_cast)
     expect(@movie.reviews).to eq([{author: 'First Author', content: 'Great movie'}, {author: 'Second Author', content: 'Bad movie'}])

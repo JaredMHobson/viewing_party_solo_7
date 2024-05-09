@@ -7,7 +7,7 @@
   <ul>
     <li>Vote: <%= @movie.vote_average.round(2) %></li>
     <li>Runtime: <%= @movie.runtime_converted %></li>
-    <li>Genre: <%= @movie.genres_names %></li>
+    <li>Genre: <%= @movie.genre_names %></li>
   </ul>
 
   <h3>Summary</h3>
@@ -24,7 +24,7 @@
   </div>
 
   <div id="reviews">
-    <h3><%= @movie.review_count %></h3>
+    <h3><%= @movie.review_count %> Reviews</h3>
     <ul>
       <% @movie.reviews.each do |review| %>
         <li>Author: <%= review[:author] %></li>

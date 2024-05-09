@@ -21,14 +21,14 @@ class Movie
     "#{@runtime / 60} hr #{@runtime % 60} min"
   end
 
-  def genres_names
+  def genre_names
     @genres.map do |genre|
       genre[:name]
     end.join(', ')
   end
 
   def review_count
-    "#{@reviews.count} Reviews"
+    @reviews.count
   end
 
   def top_ten_cast

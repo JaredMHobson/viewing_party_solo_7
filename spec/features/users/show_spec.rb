@@ -117,4 +117,12 @@ RSpec.describe 'User Show Page', type: :feature do
       end
     end
   end
+
+  it 'has a button to the discover page', :vcr do
+    visit user_path(@user1)
+
+    click_button('Discover Page')
+
+    expect(current_path).to eq(user_discover_index_path(@user1))
+  end
 end

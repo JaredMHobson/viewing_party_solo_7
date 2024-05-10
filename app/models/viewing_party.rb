@@ -15,8 +15,9 @@ class ViewingParty < ApplicationRecord
   end
 
   def movie
-    if movie_id.present?
-      MovieFacade.new(id: movie_id).movie
-    end
+    @movie ||=
+      if movie_id.present?
+        MovieFacade.new(id: movie_id).movie
+      end
   end
 end

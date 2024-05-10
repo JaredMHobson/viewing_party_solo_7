@@ -40,8 +40,8 @@ RSpec.describe 'User Show Page', type: :feature do
     it 'lists all the viewing parties that the user has been invited to with the details: movie image, movie title which links to movie show page, date and time of event, who is hosting the event and list of users invited with this users name in bold', :vcr do
       visit user_path(@user1)
 
-      within '#guest_parties' do
-        expect(page).to have_css('.party_info', count: 2)
+      within '.guest_parties' do
+        expect(page).to have_css('.viewing_party', count: 2)
         expect(page).to have_css('img', count: 2)
 
         within "#party_#{@party2.id}_info" do
@@ -51,7 +51,7 @@ RSpec.describe 'User Show Page', type: :feature do
 
           expect(page).to_not have_content("Bulletproof Monk")
 
-          within 'party_users' do
+          within '.party_users' do
             expect(page).to have_content("Sam")
             expect(page).to have_content(User.fourth.name)
 
@@ -66,7 +66,7 @@ RSpec.describe 'User Show Page', type: :feature do
 
           expect(page).to_not have_content("Rogue One: A Star Wars Story")
 
-          within 'party_users' do
+          within '.party_users' do
             expect(page).to have_content('Sam')
             expect(page).to have_content(User.second.name)
             expect(page).to have_content(User.third.name)
@@ -80,18 +80,18 @@ RSpec.describe 'User Show Page', type: :feature do
     it 'lists all the viewing parties that the user is hosting with the details: movie image, movie title which links to movie show page, date and time of event, who is hosting the event and list of users invited with this users name in bold', :vcr do
       visit user_path(@user1)
 
-      within '#hosted_parties' do
-        expect(page).to have_css('.party_info', count: 2)
+      within '.hosted_parties' do
+        expect(page).to have_css('.viewing_party', count: 2)
         expect(page).to have_css('img', count: 2)
 
-        within "party_#{@party1.id}_info" do
+        within "#party_#{@party1.id}_info" do
           expect(page).to have_link('Harry Potter and the Half-Blood Prince', href: user_movie_path(@user1, 767))
           expect(page).to have_content("Party Time: #{@party1.date} at 18:00")
           expect(page).to have_content('Host: Sam')
 
           expect(page).to_not have_content("Rogue One: A Star Wars Story")
 
-          within 'party_users' do
+          within '.party_users' do
             expect(page).to have_content('Sam')
             expect(page).to have_content(User.second.name)
             expect(page).to have_content(User.third.name)
@@ -100,14 +100,14 @@ RSpec.describe 'User Show Page', type: :feature do
           end
         end
 
-        within "party_#{@party6.id}_info" do
+        within "#party_#{@party6.id}_info" do
           expect(page).to have_link('Bulletproof Monk', href: user_movie_path(@user1, 11817))
           expect(page).to have_content("Party Time: #{@party6.date} at 19:30")
           expect(page).to have_content('Host: Sam')
 
           expect(page).to_not have_content('Harry Potter and the Half-Blood Prince')
 
-          within 'party_users' do
+          within '.party_users' do
             expect(page).to have_content('Sam')
             expect(page).to have_content(User.third.name)
 

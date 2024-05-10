@@ -24,7 +24,9 @@ RSpec.describe 'Movie' do
       genres: [{id: 1, name: 'Romance'}, {id: 2, name: 'Horror'}],
       summary: 'A horror romance movie',
       cast: @long_cast,
-      reviews: [{author: 'First Author', content: 'Great movie'}, {author: 'Second Author', content: 'Bad movie'}]
+      reviews: [{author: 'First Author', content: 'Great movie'}, {author: 'Second Author', content: 'Bad movie'}],
+      release_date: 'June',
+      poster_path: 'here.jpg'
     }
 
     @movie = Movie.new(details)
@@ -39,6 +41,8 @@ RSpec.describe 'Movie' do
     expect(@movie.summary).to eq('A horror romance movie')
     expect(@movie.cast).to eq(@long_cast)
     expect(@movie.reviews).to eq([{author: 'First Author', content: 'Great movie'}, {author: 'Second Author', content: 'Bad movie'}])
+    expect(@movie.release_date).to eq('June')
+    expect(@movie.poster_path).to eq('here.jpg')
   end
 
   describe '#instance_methods' do

@@ -5,7 +5,7 @@ class ViewingParty < ApplicationRecord
   has_many :users, through: :user_parties
 
   def find_host
-    users.where("user_parties.host = true").first
+    users.where('user_parties.host = true').first
   end
 
   def duration_cannot_be_less_than_movie_time

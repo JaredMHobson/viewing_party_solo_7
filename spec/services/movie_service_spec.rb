@@ -24,25 +24,13 @@ RSpec.describe 'Movie Service' do
   describe '#movie_search' do
     it 'returns an array of movies data with a title that included the searched words', :vcr do
       movies = MovieService.new.movie_search('Harry Potter')
-      movie1 = movies.first
-      movie2 = movies.first
 
       expect(movies).to be_a Array
 
-      expect(movie1).to have_key(:title)
-      expect(movie1[:title]).to be_a String
-
-      expect(movie1).to have_key(:vote_average)
-      expect(movie1[:vote_average]).to be_a Float
-
-      expect(movie2).to have_key(:title)
-      expect(movie2[:title]).to be_a String
-
-      expect(movie2).to have_key(:vote_average)
-      expect(movie2[:vote_average]).to be_a Float
-
       movies.each do |mov|
         expect(mov[:title]).to include('Harry Potter')
+        expect(mov).to have_key(:title)
+        expect(mov).to have_key(:vote_average)
       end
     end
   end
@@ -65,6 +53,34 @@ RSpec.describe 'Movie Service' do
 
       expect(movie).to have_key(:vote_average)
       expect(movie[:vote_average]).to be_a Float
+    end
+  end
+
+  describe '#find_movie_providers' do
+    it 'returns a hash where with keys to find providers who rent or let you buy the movie', :vcr do
+      providers = MovieService.new.find_movie_providers(767)
+
+      expect(providers).to be_a Hash
+
+      expect(providers).to have_key(:buy)
+      expect(providers[:buy]).to be_a Array
+
+      expect(providers).to have_key(:rent)
+      expect(providers[:rent]).to be_a Array
+    end
+  end
+
+  describe '#find_similar_movies' do
+    it 'returns an array of movies data that are similar to the movie with the argument ID', :vcr do
+      movies = MovieService.new.find_similar_movies(767)
+
+      expect(movies).to be_a Array
+
+      movies.each do |mov|
+        expect(mov).to have_key(:id)
+        expect(mov).to have_key(:title)
+        expect(mov).to have_key(:vote_average)
+      end
     end
   end
 

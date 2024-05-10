@@ -12,20 +12,7 @@ class MovieFacade
     if @id
       data = @service.find_movie(@id)
 
-      movie_data = {
-      id: data[:id],
-      title: data[:title],
-      vote_average: data[:vote_average],
-      runtime: data[:runtime],
-      genres: data[:genres],
-      summary: data[:overview],
-      cast: data[:credits][:cast],
-      reviews: data[:reviews][:results],
-      release_date: data[:release_date],
-      poster_path: data[:poster_path]
-    }
-
-      Movie.new(movie_data)
+      Movie.new(format_movie_data(data))
     end
   end
 
@@ -33,7 +20,12 @@ class MovieFacade
     @service.find_similar_movies(@id)[0..4].map do |movie|
       data = @service.find_movie(movie[:id])
 
-      movie_data = {
+      Movie.new(format_movie_data(data))
+    end
+  end
+
+  def format_movie_data(data)
+    {
         id: data[:id],
         title: data[:title],
         vote_average: data[:vote_average],
@@ -45,9 +37,6 @@ class MovieFacade
         release_date: data[:release_date],
         poster_path: data[:poster_path]
       }
-
-      Movie.new(movie_data)
-    end
   end
 
   def movies

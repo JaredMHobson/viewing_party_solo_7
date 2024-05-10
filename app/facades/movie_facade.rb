@@ -16,7 +16,9 @@ class MovieFacade
       genres: data[:genres],
       summary: data[:overview],
       cast: data[:credits][:cast],
-      reviews: data[:reviews][:results]
+      reviews: data[:reviews][:results],
+      rent: where_to_rent_movie,
+      buy: where_to_buy_movie
     }
 
     Movie.new(movie_data)
@@ -30,5 +32,13 @@ class MovieFacade
     end
 
     movies.compact[0..19]
+  end
+
+  def where_to_rent_movie
+    @service.find_movie_providers(@id)[:rent]
+  end
+
+  def where_to_buy_movie
+    @service.find_movie_providers(@id)[:buy]
   end
 end

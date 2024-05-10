@@ -12,6 +12,10 @@ class MovieService
     get_url("movie/#{id}?append_to_response=credits,reviews")
   end
 
+  def find_movie_providers(id)
+    get_url("movie/#{id}/watch/providers")[:results][:US]
+  end
+
   def get_url(url)
     response = conn.get(url)
     JSON.parse(response.body, symbolize_names: true)

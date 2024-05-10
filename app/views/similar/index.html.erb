@@ -1,0 +1,14 @@
+<h1>Movies Similar to <%= @facade.movie.title %></h1>
+<% @facade.similar_movies.each do |movie| %>
+  <section class="movie_info">
+    <section class="movie_poster">
+      <%= image_tag("#{@facade.images}#{movie.poster_path}") %>
+    </section>
+    <ul>
+      <ul>Title: <%= movie.title %></ul>
+      <ul>Summary: <%= movie.summary %></ul>
+      <ul>Release Date: <%= movie.release_date %></ul>
+      <ul>Vote: <%= movie.vote_average.round(2) %></ul>
+    </ul>
+  </section>
+<% end %>

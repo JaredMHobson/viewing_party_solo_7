@@ -61,4 +61,16 @@ RSpec.describe 'Movie Show Page', type: :feature do
       end
     end
   end
+
+  describe 'User Story 6' do
+    it 'shows a link to get similar movies and when clicked on, im taken to Similar Movies page', :vcr do
+      user = User.create!(name: 'Sam', email: 'sam@email.com')
+
+      visit user_movie_path(user, 767)
+
+      click_link('Get Similar Movies', href: user_movie_similar_index_path(user, 767))
+
+      expect(current_path).to eq(user_movie_similar_index_path(user, 767))
+    end
+  end
 end

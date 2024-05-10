@@ -16,6 +16,10 @@ class MovieService
     get_url("movie/#{id}/watch/providers")[:results][:US]
   end
 
+  def find_similar_movies(id)
+    get_url("movie/#{id}/similar")[:results]
+  end
+
   def get_url(url)
     response = conn.get(url)
     JSON.parse(response.body, symbolize_names: true)

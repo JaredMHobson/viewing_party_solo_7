@@ -20,8 +20,31 @@ class MovieFacade
       genres: data[:genres],
       summary: data[:overview],
       cast: data[:credits][:cast],
-      reviews: data[:reviews][:results]
+      reviews: data[:reviews][:results],
+      release_date: data[:release_date],
+      poster_path: data[:poster_path]
     }
+
+      Movie.new(movie_data)
+    end
+  end
+
+  def similar_movies
+    @service.find_similar_movies(@id)[0..4].map do |movie|
+      data = @service.find_movie(movie[:id])
+
+      movie_data = {
+        id: data[:id],
+        title: data[:title],
+        vote_average: data[:vote_average],
+        runtime: data[:runtime],
+        genres: data[:genres],
+        summary: data[:overview],
+        cast: data[:credits][:cast],
+        reviews: data[:reviews][:results],
+        release_date: data[:release_date],
+        poster_path: data[:poster_path]
+      }
 
       Movie.new(movie_data)
     end
@@ -43,5 +66,9 @@ class MovieFacade
 
   def movie_buy_services
     @service.find_movie_providers(@id)[:buy]
+  end
+
+  def images
+    'https://image.tmdb.org/t/p/w200'
   end
 end

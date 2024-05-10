@@ -5,7 +5,9 @@ class Movie
               :runtime,
               :summary,
               :cast,
-              :reviews
+              :reviews,
+              :release_date,
+              :poster_path
 
   def initialize(attributes)
     @id = attributes[:id]
@@ -16,6 +18,8 @@ class Movie
     @summary = attributes[:summary]
     @cast = attributes[:cast]
     @reviews = attributes[:reviews]
+    @release_date = attributes[:release_date]
+    @poster_path = attributes[:poster_path]
   end
 
   def runtime_converted

@@ -52,7 +52,7 @@ RSpec.describe 'User Show Page', type: :feature do
           expect(page).to_not have_content("Bulletproof Monk")
 
           within '.party_users' do
-            expect(page).to have_content("Sam")
+            expect(page).to have_css('strong', text: 'Sam')
             expect(page).to have_content(User.fourth.name)
 
             expect(page).to_not have_content(User.third.name)
@@ -67,7 +67,7 @@ RSpec.describe 'User Show Page', type: :feature do
           expect(page).to_not have_content("Rogue One: A Star Wars Story")
 
           within '.party_users' do
-            expect(page).to have_content('Sam')
+            expect(page).to have_css('strong', text: 'Sam')
             expect(page).to have_content(User.second.name)
             expect(page).to have_content(User.third.name)
 

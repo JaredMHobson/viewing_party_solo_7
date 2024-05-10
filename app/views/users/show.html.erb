@@ -1,71 +1,78 @@
-<h1><%= "#{@user.name}'s Dashboard" %></h1><br>
+<div class="container text-center">
+  <h1><%= "#{@user.name}'s Dashboard" %></h1><br>
 
-<%= button_to 'Discover Page', user_discover_index_path(@user), method: :get %>
+  <%= button_to 'Discover Page', user_discover_index_path(@user), method: :get %>
 
-<section class="viewing_parties">
-  <section class="guest_parties">
-    <h2>Guest Parties</h2>
-    <% @user.guest_parties.each do |party| %>
-      <div class="viewing_party" id="party_<%= party.id %>_info">
+  <section class="viewing_parties">
+    <div class="row">
+      <section class="guest_parties">
+        <h2>Guest Parties</h2>
+        <% @user.guest_parties.each do |party| %>
+          <div class="viewing_party d-flex" id="party_<%= party.id %>_info">
 
-        <div class="movie_poster">
-          <%= image_tag("#{@facade.images}#{party.movie.poster_path}") %>
-        </div>
+            <div class="movie_poster col-4">
+              <%= image_tag("#{@facade.images}#{party.movie.poster_path}") %>
+            </div>
 
-        <div class="party_info">
-          <h2><%= link_to party.movie.title, user_movie_path(@user, party.movie.id) %></h2>
+            <div class="party_info col-8 text-start">
+              <h2><%= link_to party.movie.title, user_movie_path(@user, party.movie.id) %></h2>
 
-          <ul>
-            <li>Party Time: <%= party.date %> at <%= party.start_time %></li>
+              <ul>
+                <li>Party Time: <%= party.date %> at <%= party.start_time %></li>
 
-            <li>Host: <%= party.find_host.name %></li>
+                <li>Host: <%= party.find_host.name %></li>
 
-            <li>
-              <section class="party_users">
-                <ol>
-                  <% party.users.each do |user| %>
-                    <% if @user == user %>
-                      <li><strong><%= user.name %></strong></li>
-                    <% else %>
-                      <li><%= user.name %></li>
-                    <% end %>
-                  <% end %>
-                </ol>
-              </section>
-            </li>
-          </ul>
-        </div>
-      </div>
-    <% end %>
+                <li>
+                  <section class="party_users">
+                    <ol>
+                      <% party.users.each do |user| %>
+                        <% if @user == user %>
+                          <li><strong><%= user.name %></strong></li>
+                        <% else %>
+                          <li><%= user.name %></li>
+                        <% end %>
+                      <% end %>
+                    </ol>
+                  </section>
+                </li>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+      </section>
+    </div>
+
+    <div class="row">
+      <section class="hosted_parties">
+        <h2>Hosted Parties</h2>
+        <% @user.hosted_parties.each do |party| %>
+          <div class="viewing_party d-flex" id="party_<%= party.id %>_info">
+
+            <div class="movie_poster col-4">
+              <%= image_tag("#{@facade.images}#{party.movie.poster_path}") %>
+            </div>
+            <div class="party_info col-8 text-start">
+              <h2><%= link_to party.movie.title, user_movie_path(@user, party.movie.id) %></h2>
+
+              <ul>
+                <li>Party Time: <%= party.date %> at <%= party.start_time %></li>
+
+                <li>Host: <%= party.find_host.name %></li>
+
+                <li>
+                  <section class="party_users">
+                    <ol>
+                      <% party.users.each do |user| %>
+                        <li><%= user.name %></li>
+                      <% end %>
+                    </ol>
+                  </section>
+                </li>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+      </section>
+    </div>
   </section>
-
-  <section class="hosted_parties">
-    <h2>Hosted Parties</h2>
-    <% @user.hosted_parties.each do |party| %>
-      <div class="viewing_party" id="party_<%= party.id %>_info">
-
-        <div class="movie_poster">
-          <%= image_tag("#{@facade.images}#{party.movie.poster_path}") %>
-        </div>
-
-        <h2><%= link_to party.movie.title, user_movie_path(@user, party.movie.id) %></h2>
-
-        <ul>
-          <li>Party Time: <%= party.date %> at <%= party.start_time %></li>
-
-          <li>Host: <%= party.find_host.name %></li>
-
-          <li>
-            <section class="party_users">
-              <ol>
-                <% party.users.each do |user| %>
-                  <li><%= user.name %></li>
-                <% end %>
-              </ol>
-            </section>
-          </li>
-        </ul>
-      </div>
-    <% end %>
-  </section>
-</section>
+</div>

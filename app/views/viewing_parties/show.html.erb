@@ -1,16 +1,18 @@
-<h1><%= @facade.movie.title %> Viewing Party</h1>
+<div class="container text-center">
+  <h1><%= @facade.movie.title %> Viewing Party</h1>
 
-<section id="buy_movie">
-  <h3>Buy:</h3>
-  <% @facade.movie_buy_services.each do |service| %>
-    <%= image_tag("https://image.tmdb.org/t/p/w200#{service[:logo_path]}", width: "50px") %>
-  <% end %>
-</section>
+  <section id="buy_movie">
+    <h3>Buy:</h3>
+    <% @facade.movie_buy_services.each do |service| %>
+      <%= image_tag("https://image.tmdb.org/t/p/w200#{service[:logo_path]}", width: "50px") %>
+    <% end %>
+  </section>
 
-<section id="rent_movie">
-  <h3>Rent:</h3>
-  <% @facade.movie_rental_services.each do |service| %>
-    <%= image_tag("https://image.tmdb.org/t/p/w200#{service[:logo_path]}", width: "50px") %>
-  <% end %>
-</section>
-<p>Buy/Rent data provided by JustWatch</p>
+  <section id="rent_movie">
+    <h3>Rent:</h3>
+    <% @facade.movie_rental_services.each do |service| %>
+      <%= image_tag("https://image.tmdb.org/t/p/w200#{service[:logo_path]}", width: "50px") %>
+    <% end %>
+  </section>
+  <p>Buy/Rent data provided by JustWatch</p>
+</div>

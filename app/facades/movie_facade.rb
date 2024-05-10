@@ -1,14 +1,18 @@
 class MovieFacade
+  attr_reader :movie
+
   def initialize(search: nil, id: nil)
     @search = search
     @id = id
     @service = MovieService.new
+    @movie ||= find_movie
   end
 
-  def movie
-    data = @service.find_movie(@id)
+  def find_movie
+    if @id
+      data = @service.find_movie(@id)
 
-    movie_data = {
+      movie_data = {
       id: data[:id],
       title: data[:title],
       vote_average: data[:vote_average],
@@ -16,12 +20,11 @@ class MovieFacade
       genres: data[:genres],
       summary: data[:overview],
       cast: data[:credits][:cast],
-      reviews: data[:reviews][:results],
-      rent: where_to_rent_movie,
-      buy: where_to_buy_movie
+      reviews: data[:reviews][:results]
     }
 
-    Movie.new(movie_data)
+      Movie.new(movie_data)
+    end
   end
 
   def movies
@@ -34,11 +37,11 @@ class MovieFacade
     movies.compact[0..19]
   end
 
-  def where_to_rent_movie
+  def movie_rental_services
     @service.find_movie_providers(@id)[:rent]
   end
 
-  def where_to_buy_movie
+  def movie_buy_services
     @service.find_movie_providers(@id)[:buy]
   end
 end

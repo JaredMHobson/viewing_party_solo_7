@@ -1,7 +1,7 @@
 class ViewingPartiesController < ApplicationController
   def new
     @user ||= User.find(params[:user_id])
-    @movie = MovieFacade.new(id: params[:movie_id]).movie
+    @facade = MovieFacade.new(id: params[:movie_id])
   end
 
   def create
@@ -22,8 +22,7 @@ class ViewingPartiesController < ApplicationController
   end
 
   def show
-
-    @movie = MovieFacade.new(id: params[:movie_id]).movie
+    @facade = MovieFacade.new(id: params[:movie_id])
   end
 
   private

@@ -3,6 +3,7 @@
     <ul class="nav navbar-nav pull-right">
       <li><%= link_to 'Home', root_path, style: 'pull-right' %></li>
       <% if current_user %>
+        <li><%= link_to 'Profile', user_path(current_user), style: 'pull-right' %></li>
         <li><%= link_to 'Log Out', login_path, style: 'pull-right' %></li>
       <% else %>
         <li><%= link_to 'Register', register_user_path, style: 'pull-right' %></li>

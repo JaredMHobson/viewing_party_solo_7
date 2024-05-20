@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Movie Show Page', type: :feature do
   describe 'User Story 3' do
     it 'has a button to create a new viewing party', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com')
+      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
 
       visit user_movie_path(user, 767)
 
@@ -13,7 +13,7 @@ RSpec.describe 'Movie Show Page', type: :feature do
     end
 
     it 'has a button to return to the discover page', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com')
+      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
 
       visit user_movie_path(user, 767)
 
@@ -22,8 +22,9 @@ RSpec.describe 'Movie Show Page', type: :feature do
       expect(current_path).to eq(user_discover_index_path(user))
     end
 
-    it 'shows the movies title, its vote average, it runtime in hours and minutes, its genres, its summary, its first 10 cast members, its count of total reviews and each reviews author and information', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com')
+    it 'shows the movies title, its vote average, it runtime in hours and minutes, its genres, its summary, its first 10 cast members, its count of total reviews and each reviews author and information',
+       :vcr do
+      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
 
       visit user_movie_path(user, 767)
 
@@ -64,7 +65,7 @@ RSpec.describe 'Movie Show Page', type: :feature do
 
   describe 'User Story 6' do
     it 'shows a link to get similar movies and when clicked on, im taken to Similar Movies page', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com')
+      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
 
       visit user_movie_path(user, 767)
 

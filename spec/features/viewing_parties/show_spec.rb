@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'Viewing Party Show Page', type: :feature do
   describe 'User Story 5' do
-    it 'shows logos of video providers where you can buy the movie and rent the movie, it shows data attribution for the JustWatch platform', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com')
+    it 'shows logos of video providers where you can buy the movie and rent the movie, it shows data attribution for the JustWatch platform',
+       :vcr do
+      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
       party_details = {
         duration: 180,
         date: Date.tomorrow,

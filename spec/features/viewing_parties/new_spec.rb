@@ -2,11 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Viewing Party New Page', type: :feature do
   describe 'User Story 4' do
-    it 'shows the movie title over a form with fields for party duration(default value is the movies runtime and cannot be less than this), date selection, start time, guests, button to create a party', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com')
-      user2 = User.create!(name: 'Mike', email: 'mike@email.com')
-      user3 = User.create!(name: 'Ron', email: 'ron@email.com')
-      user4 = User.create!(name: 'Angel', email: 'angel@email.com')
+    it 'shows the movie title over a form with fields for party duration(default value is the movies runtime and cannot be less than this), date selection, start time, guests, button to create a party',
+       :vcr do
+      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
+      user2 = User.create!(name: 'Mike', email: 'mike@email.com', password: Faker::Internet.password)
+      user3 = User.create!(name: 'Ron', email: 'ron@email.com', password: Faker::Internet.password)
+      user4 = User.create!(name: 'Angel', email: 'angel@email.com', password: Faker::Internet.password)
 
       visit new_user_movie_viewing_party_path(user, 767)
 
@@ -23,11 +24,12 @@ RSpec.describe 'Viewing Party New Page', type: :feature do
       expect(current_path).to eq(user_path(user))
     end
 
-    it 'creates the movie unless there are errors which will be shown when youre redirected to the new viewing party page and shows the info on the user dashboard page if successfully created', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com')
-      User.create!(name: 'Mike', email: 'mike@email.com')
-      User.create!(name: 'Ron', email: 'ron@email.com')
-      User.create!(name: 'Angel', email: 'angel@email.com')
+    it 'creates the movie unless there are errors which will be shown when youre redirected to the new viewing party page and shows the info on the user dashboard page if successfully created',
+       :vcr do
+      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
+      User.create!(name: 'Mike', email: 'mike@email.com', password: Faker::Internet.password)
+      User.create!(name: 'Ron', email: 'ron@email.com', password: Faker::Internet.password)
+      User.create!(name: 'Angel', email: 'angel@email.com', password: Faker::Internet.password)
 
       visit new_user_movie_viewing_party_path(user, 767)
 

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Movies Index Page', type: :feature do
   describe 'User Story 2' do
     it 'displays each movies title as a link to the movie details page and their Vote Average', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com')
+      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
 
       visit user_discover_index_path(user)
 
@@ -24,7 +24,7 @@ RSpec.describe 'Movies Index Page', type: :feature do
     end
 
     it 'displays a max of 20 movies', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com')
+      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
 
       visit user_movies_path(user)
 
@@ -34,7 +34,7 @@ RSpec.describe 'Movies Index Page', type: :feature do
     end
 
     it 'has a button to the discover page', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com')
+      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
 
       visit user_movies_path(user)
 

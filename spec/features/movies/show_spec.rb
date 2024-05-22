@@ -5,6 +5,15 @@ RSpec.describe 'Movie Show Page', type: :feature do
     it 'has a button to create a new viewing party', :vcr do
       user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
 
+      visit login_path
+
+      within '.login_form' do
+        fill_in :email, with: user.email
+        fill_in :password, with: user.password
+
+        click_on "Log In"
+      end
+
       visit user_movie_path(user, 767)
 
       click_button('Create Viewing Party for Harry Potter and the Half-Blood Prince')
@@ -73,5 +82,20 @@ RSpec.describe 'Movie Show Page', type: :feature do
 
       expect(current_path).to eq(user_movie_similar_index_path(user, 767))
     end
+  end
+
+  it 'redirects you to the root path if you are not logged into the user account you are attempting to create a viewing party for', :vcr do
+    user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
+
+    visit root_path
+
+    expect(page).to have_link('Log In')
+
+    visit user_movie_path(user, 767)
+
+    click_button('Create Viewing Party for Harry Potter and the Half-Blood Prince')
+
+    expect(current_path).to eq(root_path)
+    expect(page).to have_content('You must be logged in or registered to create a Viewing Party.')
   end
 end

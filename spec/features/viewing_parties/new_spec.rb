@@ -9,6 +9,15 @@ RSpec.describe 'Viewing Party New Page', type: :feature do
       user3 = User.create!(name: 'Ron', email: 'ron@email.com', password: Faker::Internet.password)
       user4 = User.create!(name: 'Angel', email: 'angel@email.com', password: Faker::Internet.password)
 
+      visit login_path
+
+      within '.login_form' do
+        fill_in :email, with: user.email
+        fill_in :password, with: user.password
+
+        click_on "Log In"
+      end
+
       visit new_user_movie_viewing_party_path(user, 767)
 
       expect(page).to have_button('Discover Page')
@@ -30,6 +39,15 @@ RSpec.describe 'Viewing Party New Page', type: :feature do
       User.create!(name: 'Mike', email: 'mike@email.com', password: Faker::Internet.password)
       User.create!(name: 'Ron', email: 'ron@email.com', password: Faker::Internet.password)
       User.create!(name: 'Angel', email: 'angel@email.com', password: Faker::Internet.password)
+
+      visit login_path
+
+      within '.login_form' do
+        fill_in :email, with: user.email
+        fill_in :password, with: user.password
+
+        click_on "Log In"
+      end
 
       visit new_user_movie_viewing_party_path(user, 767)
 

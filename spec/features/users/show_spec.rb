@@ -45,6 +45,15 @@ RSpec.describe 'User Show Page', type: :feature do
   describe 'User Story 7' do
     it 'lists all the viewing parties that the user has been invited to with the details: movie image, movie title which links to movie show page, date and time of event, who is hosting the event and list of users invited with this users name in bold',
        :vcr do
+      visit login_path
+
+      within '.login_form' do
+        fill_in :email, with: @user1.email
+        fill_in :password, with: @user1.password
+
+        click_on "Log In"
+      end
+
       visit user_path(@user1)
 
       within '.guest_parties' do
@@ -86,6 +95,15 @@ RSpec.describe 'User Show Page', type: :feature do
 
     it 'lists all the viewing parties that the user is hosting with the details: movie image, movie title which links to movie show page, date and time of event, who is hosting the event and list of users invited with this users name in bold',
        :vcr do
+      visit login_path
+
+      within '.login_form' do
+        fill_in :email, with: @user1.email
+        fill_in :password, with: @user1.password
+
+        click_on "Log In"
+      end
+
       visit user_path(@user1)
 
       within '.hosted_parties' do
@@ -127,10 +145,30 @@ RSpec.describe 'User Show Page', type: :feature do
   end
 
   it 'has a button to the discover page', :vcr do
+    visit login_path
+
+    within '.login_form' do
+      fill_in :email, with: @user1.email
+      fill_in :password, with: @user1.password
+
+      click_on "Log In"
+    end
+
     visit user_path(@user1)
 
     click_button('Discover Page')
 
     expect(current_path).to eq(user_discover_index_path(@user1))
+  end
+
+  it 'redirects you to the root path if you are not logged into the user accounts whose dashboard you are visiting and returns an error message', :vcr do
+    visit root_path
+
+    expect(page).to have_link('Log In')
+
+    visit user_path(@user1)
+
+    expect(current_path).to eq(root_path)
+    expect(page).to have_content("You must be logged in or registered to access a user's dashboard.")
   end
 end

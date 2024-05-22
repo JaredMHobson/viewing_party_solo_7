@@ -1,9 +1,13 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user
 
-  private
   def current_user
-    @_current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @_current_user ||=
+      if session[:user_id]
+        User.find(session[:user_id])
+      elsif cookies[:user_id]
+        User.find(cookies.encrypted[:user_id])
+      end
   end
 
 

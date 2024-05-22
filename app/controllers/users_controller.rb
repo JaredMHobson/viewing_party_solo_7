@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     user[:email] = user[:email].downcase
     new_user = User.new(user)
     if new_user.save
+      cookies.encrypted[:user_id] = { value: new_user.id, expires: 1.month }
       session[:user_id] = new_user.id
       flash[:success] = 'Successfully Created New User'
       redirect_to user_path(new_user)

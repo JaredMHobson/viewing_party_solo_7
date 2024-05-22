@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
 
     if user.authenticate(params[:password])
       session[:user_id] = user.id
+      cookies.encrypted[:user_id] = { value: user.id, expires: 1.month }
       cookies[:location] = params[:location]
       flash[:success] = "Welcome, #{user.name}"
       redirect_to user_path(user)
@@ -16,6 +17,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    cookies.delete :user_id
     reset_session
     flash[:success] = 'Logged out successfully.'
     redirect_to root_path

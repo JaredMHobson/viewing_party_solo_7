@@ -43,76 +43,127 @@ RSpec.describe "Logging In" do
     expect(page).to have_content("Invalid email address or password.")
   end
 
-  it 'can log out once you are logged in' do
-    user = User.create(name: "Tarzan", email: 'tarzan113@email.com', password: "hunter8")
+  describe 'log out' do
+    it 'can log out once you are logged in and returns you to the root page' do
+      user = User.create(name: "Tarzan", email: 'tarzan113@email.com', password: "hunter8")
 
-    visit root_path
+      visit root_path
 
-    expect(page).to_not have_button('Log Out')
-
-    click_on "Log In"
-
-    expect(current_path).to eq(login_path)
-
-    within '.login_form' do
-      fill_in :email, with: user.email
-      fill_in :password, with: user.password
+      expect(page).to_not have_button('Log Out')
 
       click_on "Log In"
+
+      expect(current_path).to eq(login_path)
+
+      within '.login_form' do
+        fill_in :email, with: user.email
+        fill_in :password, with: user.password
+
+        click_on "Log In"
+      end
+
+      click_on 'Log Out'
+
+      expect(page).to have_content('Logged out successfully.')
+      expect(current_path).to eq(root_path)
     end
 
-    click_on 'Log Out'
+    it 'does not have show the log in or register links when logged in and when you log out, it shows them again' do
+      user = User.create(name: "Tarzan", email: 'tarzan113@email.com', password: "hunter8")
 
-    expect(page).to have_content('Logged out successfully.')
+      visit root_path
+
+      click_on "Log In"
+
+      within '.login_form' do
+        fill_in :email, with: user.email
+        fill_in :password, with: user.password
+
+        click_on "Log In"
+      end
+
+      expect(page).to_not have_link('Log In')
+      expect(page).to_not have_link('Register')
+
+      click_on "Log Out"
+
+      expect(page).to have_link('Log In')
+      expect(page).to have_link('Register')
+    end
   end
 
-  it 'has a field to enter your location that is stored within a cookie and your location will be visible on the landing page' do
-    user = User.create(name: 'Tarzan', email: 'tarzan113@email.com', password: 'hunter8')
+  describe 'remember me cookie' do
+    it 'remembers that you are logged in even when you navigate to a different website' do
+      user = User.create(name: "Tarzan", email: 'tarzan113@email.com', password: "hunter8")
 
-    visit root_path
-
-    click_on 'Log In'
-
-    expect(current_path).to eq(login_path)
-
-    within '.login_form' do
-      fill_in :email, with: user.email
-      fill_in :password, with: user.password
-      fill_in :location, with: 'the jungle'
+      visit root_path
 
       click_on "Log In"
+
+      within '.login_form' do
+        fill_in :email, with: user.email
+        fill_in :password, with: user.password
+
+        click_on "Log In"
+      end
+
+      visit "http://google.com"
+
+      visit root_path
+
+      expect(page).to have_button('Log Out')
     end
-
-    expect(current_path).to eq(user_path(user))
-
-    expect(page).to have_content('Location: the jungle')
   end
 
-  it 'when you log out and click log in again, the location field will already be filled out with your previously entered location' do
-    user = User.create(name: 'Tarzan', email: 'tarzan113@email.com', password: 'hunter8')
+  describe 'location cookie' do
+    it 'has a field to enter your location that is stored within a cookie and your location will be visible on the landing page' do
+      user = User.create(name: 'Tarzan', email: 'tarzan113@email.com', password: 'hunter8')
 
-    visit root_path
+      visit root_path
 
-    click_on 'Log In'
+      click_on 'Log In'
 
-    expect(current_path).to eq(login_path)
+      expect(current_path).to eq(login_path)
 
-    within '.login_form' do
-      fill_in :email, with: user.email
-      fill_in :password, with: user.password
-      fill_in :location, with: 'the jungle'
+      within '.login_form' do
+        fill_in :email, with: user.email
+        fill_in :password, with: user.password
+        fill_in :location, with: 'the jungle'
 
-      click_on "Log In"
+        click_on "Log In"
+      end
+
+      expect(current_path).to eq(user_path(user))
+
+      expect(page).to have_content('Location: the jungle')
     end
 
-    expect(page).to have_content('Location: the jungle')
+    it 'when you log out and click log in again, the location field will already be filled out with your previously entered location' do
+      user = User.create(name: 'Tarzan', email: 'tarzan113@email.com', password: 'hunter8')
 
-    click_on 'Log Out'
+      visit root_path
 
-    click_on 'Log In'
+      click_on 'Log In'
 
-    within '.login_form' do
-      expect(page).to have_field(:location, with: 'the jungle')
+      expect(current_path).to eq(login_path)
+
+      within '.login_form' do
+        fill_in :email, with: user.email
+        fill_in :password, with: user.password
+        fill_in :location, with: 'the jungle'
+
+        click_on "Log In"
+      end
+
+      expect(page).to have_content('Location: the jungle')
+
+      click_on 'Log Out'
+
+      click_on 'Log In'
+
+      within '.login_form' do
+        expect(page).to have_field(:location, with: 'the jungle')
+      end
     end
   end
 end

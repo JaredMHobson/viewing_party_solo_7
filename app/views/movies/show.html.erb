@@ -2,9 +2,9 @@
   <h1><%= @facade.movie.title %></h1>
 
   <div class="row">
-    <%= button_to 'Discover Page', user_discover_index_path(@user), method: :get %>
-    <%= button_to "Create Viewing Party for #{@facade.movie.title}", new_user_movie_viewing_party_path(@user, @facade.movie.id), method: :get %>
-    <%= link_to 'Get Similar Movies', user_movie_similar_index_path(@user, @facade.movie.id) %>
+    <%= button_to 'Discover Page', discover_index_path, method: :get %>
+    <%= button_to "Create Viewing Party for #{@facade.movie.title}", new_movie_viewing_party_path(@facade.movie.id), method: :get %>
+    <%= link_to 'Get Similar Movies', movie_similar_index_path(@facade.movie.id) %>
   </div>
 
   <div id="movie_info">

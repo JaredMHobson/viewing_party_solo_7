@@ -5,8 +5,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    if params[:id].to_i == session[:user_id]
-      @user = User.find(params[:id])
+    if current_user
       @facade = MovieFacade.new
     else
       flash[:error] = "You must be logged in or registered to access a user's dashboard."

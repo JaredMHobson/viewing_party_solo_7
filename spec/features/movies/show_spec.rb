@@ -1,41 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe 'Movie Show Page', type: :feature do
+  before(:each) do
+    @user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+  end
+
   describe 'User Story 3' do
     it 'has a button to create a new viewing party', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
-
-      visit login_path
-
-      within '.login_form' do
-        fill_in :email, with: user.email
-        fill_in :password, with: user.password
-
-        click_on "Log In"
-      end
-
-      visit user_movie_path(user, 767)
+      visit movie_path(767)
 
       click_button('Create Viewing Party for Harry Potter and the Half-Blood Prince')
 
-      expect(current_path).to eq(new_user_movie_viewing_party_path(user, 767))
+      expect(current_path).to eq(new_movie_viewing_party_path(767))
     end
 
     it 'has a button to return to the discover page', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
-
-      visit user_movie_path(user, 767)
+      visit movie_path(767)
 
       click_button('Discover Page')
 
-      expect(current_path).to eq(user_discover_index_path(user))
+      expect(current_path).to eq(discover_index_path)
     end
 
     it 'shows the movies title, its vote average, it runtime in hours and minutes, its genres, its summary, its first 10 cast members, its count of total reviews and each reviews author and information',
        :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
-
-      visit user_movie_path(user, 767)
+      visit movie_path(767)
 
       expect(page).to have_content('Harry Potter and the Half-Blood Prince')
 
@@ -74,24 +65,19 @@ RSpec.describe 'Movie Show Page', type: :feature do
 
   describe 'User Story 6' do
     it 'shows a link to get similar movies and when clicked on, im taken to Similar Movies page', :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
+      visit movie_path(767)
 
-      visit user_movie_path(user, 767)
+      click_link('Get Similar Movies', href: movie_similar_index_path(767))
 
-      click_link('Get Similar Movies', href: user_movie_similar_index_path(user, 767))
-
-      expect(current_path).to eq(user_movie_similar_index_path(user, 767))
+      expect(current_path).to eq(movie_similar_index_path(767))
     end
   end
 
-  it 'redirects you to the root path if you are not logged into the user account you are attempting to create a viewing party for', :vcr do
-    user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
+  it 'redirects you to the root path if you are not logged into the user account you are attempting to create a viewing party for',
+     :vcr do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(nil)
 
-    visit root_path
-
-    expect(page).to have_link('Log In')
-
-    visit user_movie_path(user, 767)
+    visit movie_path(767)
 
     click_button('Create Viewing Party for Harry Potter and the Half-Blood Prince')
 

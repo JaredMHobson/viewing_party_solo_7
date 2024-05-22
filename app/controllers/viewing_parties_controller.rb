@@ -1,7 +1,6 @@
 class ViewingPartiesController < ApplicationController
   def new
-    if params[:user_id].to_i == session[:user_id]
-      @user ||= User.find(params[:user_id])
+    if current_user
       @facade = MovieFacade.new(id: params[:movie_id])
     else
       flash[:error] = 'You must be logged in or registered to create a Viewing Party.'
@@ -11,18 +10,17 @@ class ViewingPartiesController < ApplicationController
 
   def create
     party = ViewingParty.new(party_params)
-    user = User.find(params[:user_id])
     guests = [params[:guest_1], params[:guest_2], params[:guest_3]].map { |guest| User.find_by(email: guest) }.compact
 
     if party.save
-      party.user_parties.create(user_id: user.id, host: true)
+      party.user_parties.create(user_id: current_user.id, host: true)
       guests.each { |guest| party.user_parties.create(user_id: guest.id, host: false) }
 
       flash[:success] = 'Successfully Created New Viewing Party'
-      redirect_to user_path(user)
+      redirect_to user_path(current_user)
     else
       flash[:error] = "#{error_message(party.errors)}" # rubocop:disable Style/RedundantInterpolation
-      redirect_to new_user_movie_viewing_party_path(user, params[:movie_id])
+      redirect_to new_movie_viewing_party_path(params[:movie_id])
     end
   end
 

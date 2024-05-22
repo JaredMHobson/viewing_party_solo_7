@@ -1,10 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Viewing Party Show Page', type: :feature do
+  before(:each) do
+    @user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+  end
+
   describe 'User Story 5' do
     it 'shows logos of video providers where you can buy the movie and rent the movie, it shows data attribution for the JustWatch platform',
        :vcr do
-      user = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
       party_details = {
         duration: 180,
         date: Date.tomorrow,
@@ -13,7 +18,7 @@ RSpec.describe 'Viewing Party Show Page', type: :feature do
       }
       party = ViewingParty.create!(party_details)
 
-      visit user_movie_viewing_party_path(user, 767, party)
+      visit movie_viewing_party_path(767, party)
 
       within '#buy_movie' do
         expect(page).to have_content('Buy:')

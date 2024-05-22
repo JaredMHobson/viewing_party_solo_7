@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
 
     if user.authenticate(params[:password])
       session[:user_id] = user.id
+      cookies[:location] = params[:location]
       flash[:success] = "Welcome, #{user.name}"
       redirect_to user_path(user)
     else

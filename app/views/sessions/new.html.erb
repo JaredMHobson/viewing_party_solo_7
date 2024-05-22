@@ -5,6 +5,9 @@
     <%= f.label :password, 'Password: ' %>
     <%= f.password_field :password %>
 
+    <%= f.label :location, 'Location: ' %>
+    <%= f.text_field :location, value: cookies[:location] %>
+
     <%= f.submit 'Log In' %>
   <% end %>
 </section>

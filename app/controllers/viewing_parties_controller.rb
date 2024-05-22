@@ -17,7 +17,7 @@ class ViewingPartiesController < ApplicationController
       guests.each { |guest| party.user_parties.create(user_id: guest.id, host: false) }
 
       flash[:success] = 'Successfully Created New Viewing Party'
-      redirect_to user_path(current_user)
+      redirect_to dashboard_path
     else
       flash[:error] = "#{error_message(party.errors)}" # rubocop:disable Style/RedundantInterpolation
       redirect_to new_movie_viewing_party_path(params[:movie_id])

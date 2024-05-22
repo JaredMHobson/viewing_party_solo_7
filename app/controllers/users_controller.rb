@@ -4,15 +4,6 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def show
-    if current_user
-      @facade = MovieFacade.new
-    else
-      flash[:error] = "You must be logged in or registered to access a user's dashboard."
-      redirect_to root_path
-    end
-  end
-
   def create
     user = user_params
     user[:email] = user[:email].downcase
@@ -21,7 +12,7 @@ class UsersController < ApplicationController
       cookies.encrypted[:user_id] = { value: new_user.id, expires: 1.month }
       session[:user_id] = new_user.id
       flash[:success] = 'Successfully Created New User'
-      redirect_to user_path(new_user)
+      redirect_to dashboard_path
     else
       flash[:error] = "#{error_message(new_user.errors)}"
       redirect_to register_user_path

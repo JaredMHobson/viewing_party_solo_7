@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       cookies.encrypted[:user_id] = { value: user.id, expires: 1.month }
       cookies[:location] = params[:location]
       flash[:success] = "Welcome, #{user.name}"
-      redirect_to user_path(user)
+      redirect_to dashboard_path
     else
       flash[:error] = 'Invalid email address or password.'
       render :new

@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
 
-
   root "welcome#index"
   get '/register', to: 'users#new', as: 'register_user'
 
@@ -11,12 +10,14 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :users, only: [:show, :create]
-  # resources :discover, only: [:index]
+  get '/dashboard', to: 'dashboard#show'
+
+  resources :users, only: [:create]
+
+  resources :discover, only: [:index]
+
   resources :movies, only: [:index, :show] do
     resources :viewing_parties, only: [:new, :create, :show]
     resources :similar, only: [:index]
   end
-
-  resources :discover, only: [:index]
 end

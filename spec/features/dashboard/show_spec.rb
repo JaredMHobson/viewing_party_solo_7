@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'User Show Page', type: :feature do
+RSpec.describe 'User Dashboard Page', type: :feature do
   before(:each) do
     # create Users
     @user1 = User.create!(name: 'Sam', email: 'sam@email.com', password: Faker::Internet.password)
@@ -47,7 +47,7 @@ RSpec.describe 'User Show Page', type: :feature do
   describe 'User Story 7' do
     it 'lists all the viewing parties that the user has been invited to with the details: movie image, movie title which links to movie show page, date and time of event, who is hosting the event and list of users invited with this users name in bold',
        :vcr do
-      visit user_path(@user1)
+      visit dashboard_path
 
       within '.guest_parties' do
         expect(page).to have_css('.viewing_party', count: 2)
@@ -88,7 +88,7 @@ RSpec.describe 'User Show Page', type: :feature do
 
     it 'lists all the viewing parties that the user is hosting with the details: movie image, movie title which links to movie show page, date and time of event, who is hosting the event and list of users invited with this users name in bold',
        :vcr do
-      visit user_path(@user1)
+      visit dashboard_path
 
       within '.hosted_parties' do
         expect(page).to have_css('.viewing_party', count: 2)
@@ -129,7 +129,7 @@ RSpec.describe 'User Show Page', type: :feature do
   end
 
   it 'has a button to the discover page', :vcr do
-    visit user_path(@user1)
+    visit dashboard_path
 
     click_button('Discover Page')
 
@@ -140,7 +140,7 @@ RSpec.describe 'User Show Page', type: :feature do
      :vcr do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(nil)
 
-    visit user_path(@user1)
+    visit dashboard_path
 
     expect(current_path).to eq(root_path)
     expect(page).to have_content("You must be logged in or registered to access a user's dashboard.")

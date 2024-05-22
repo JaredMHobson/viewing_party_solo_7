@@ -26,7 +26,7 @@ RSpec.describe 'Viewing Party New Page', type: :feature do
       fill_in(:guest_2, with: 'angel@email.com')
       click_button('Create Party')
 
-      expect(current_path).to eq(user_path(@user))
+      expect(current_path).to eq(dashboard_path)
     end
 
     it 'creates the movie unless there are errors which will be shown when youre redirected to the new viewing party page and shows the info on the user dashboard page if successfully created',
@@ -55,7 +55,7 @@ RSpec.describe 'Viewing Party New Page', type: :feature do
       fill_in('Guest 2:', with: 'angel@email.com')
       click_button('Create Party')
 
-      expect(current_path).to eq(user_path(@user))
+      expect(current_path).to eq(dashboard_path)
 
       expect(page).to have_content('Host: Sam')
       expect(page).to have_content('Mike')
